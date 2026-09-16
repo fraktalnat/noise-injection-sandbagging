@@ -2,6 +2,5 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
-!logs/.gitkeep
 .ipynb_checkpoints/
 .DS_Store

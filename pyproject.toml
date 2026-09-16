@@ -5,17 +5,20 @@ description = "Reproduction of noise-injection effects on sandbagging language m
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "circuitsvis",
-    "datasets",
-    "huggingface-hub",
-    "ipython",
-    "jupyter",
-    "plotly",
-    "transformer-lens",
-    "pandas",
     "torch",
+    # Imported directly by core_claim.py and eval_model_on_dataset_batches.py.
+    # Previously arrived only transitively via transformer-lens, which is no longer
+    # a dependency -- the project moved off TransformerLens to Hugging Face for
+    # batched generation.
+    "transformers",
+    # Required by transformers for the `device_map=` argument used in core_claim.py.
+    # Also previously transitive via transformer-lens.
+    "accelerate",
+    "datasets",
+    "pandas",
     "matplotlib",
-    "einops",
+    # Not imported; provides `huggingface-cli login`, needed to access the model.
+    "huggingface-hub",
 ]
 
 [build-system]

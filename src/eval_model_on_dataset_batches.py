@@ -15,6 +15,18 @@ from src.answer_parsing import create_chat_messages, extract_final_numerical_ans
 logger = logging.getLogger(__name__)
 
 
+def empty_device_cache() -> None:
+    """Release cached accelerator memory, whichever backend is in use.
+
+    `torch.cuda.empty_cache()` is a no-op without CUDA, but calling it
+    unconditionally hides the fact that MPS needs its own call.
+    """
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    elif torch.backends.mps.is_available():
+        torch.mps.empty_cache()
+
+
 def evaluate_model_on_dataset(
     model: AutoModelForCausalLM,
     tokenizer: AutoTokenizer,
@@ -136,7 +148,7 @@ def evaluate_model_on_dataset(
 
         # Clear memory after each batch
         del batch_tokens, input_ids, attention_mask, batch_outputs, batch_responses
-        torch.cuda.empty_cache()
+        empty_device_cache()
 
     # Built once at the end so an empty dataset_df returns an empty frame rather
     # than raising UnboundLocalError.
