@@ -1,8 +1,3 @@
-"""Batched GSM8K evaluation against a HuggingFace causal LM.
-
-This is the evaluation path used by `experiments.phaseA`.
-"""
-
 import logging
 from pathlib import Path
 
@@ -16,11 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 def empty_device_cache() -> None:
-    """Release cached accelerator memory, whichever backend is in use.
-
-    `torch.cuda.empty_cache()` is a no-op without CUDA, but calling it
-    unconditionally hides the fact that MPS needs its own call.
-    """
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
     elif torch.backends.mps.is_available():
@@ -115,7 +105,9 @@ def evaluate_model_on_dataset(
         batch_outputs = batch_outputs[:, input_ids.shape[1] :]
 
         # Decode outputs
-        batch_responses = tokenizer.batch_decode(batch_outputs, skip_special_tokens=True)
+        batch_responses = tokenizer.batch_decode(
+            batch_outputs, skip_special_tokens=True
+        )
 
         # Process each example in the batch
         for j, (_, row) in enumerate(batch_df.iterrows()):

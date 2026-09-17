@@ -1,9 +1,3 @@
-"""Answer extraction and chat-message construction for GSM8K evaluation.
-
-These helpers were previously duplicated across the evaluation modules and the
-exploratory `exp0*` scripts; this module is the single source of truth.
-"""
-
 import re
 
 
