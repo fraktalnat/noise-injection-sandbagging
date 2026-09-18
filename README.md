@@ -1,8 +1,8 @@
-# Noise Injection for Sandbagging Detection
+# Exploration of noise injection for sandbagging detection
 
 **[Noise Injection Reveals Hidden Capabilities of Sandbagging Language Models](https://arxiv.org/abs/2412.01784)** (Tice et al., NeurIPS 2025).
 
-I really liked this paper and wanted to experiment to improve my understanding. Noise injection as a detection technique is a great practical tool! Because it's an untargeted technique, as the authors point out, it can address cases where sandbagging is a product of complex training dynamics rather than simple, fine-tuned mechanisms.
+I really liked this paper and wanted to experiment to improve my understanding. Noise injection as a sandbagging detection technique is a great practical tool, more so than other (white box) techniques. Because it's an untargeted technique, as the authors point out, it can address cases where sandbagging is a product of complex training dynamics rather than simple, fine-tuned mechanisms.
 
 **Short version of what I found with my current reproduction:** the effect points in the direction the paper predicts, but my noise grid is rough for that to count as evidence. The interesting part turned out to be understanding why it is like that, which in retrospective I could have predicted better (tldr: more noise draws are needed).
 
@@ -108,9 +108,9 @@ results/    # generated plots and findings
 
 ## Possible next steps
 
-- A dense σ sweep over a fixed low range, with as many seeds as affordably so. 
+- A dense σ sweep over a fixed low range, with as many seeds as affordably so.
+- I would like to try a harder dataset, like BigCodeBench and see what holds.
 - Password-locked models.
-- The authors suggest coding benchmarks, and I would like to try a harder dataset.
 - Why does it work? It seems like a mechanistic question, it seems that the suppression is encoded in something more fragile or more localized than the capability itself so maybe varying which layers get noised would be a way to probe that.
 
 ## Reference
